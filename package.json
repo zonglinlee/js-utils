@@ -1,0 +1,66 @@
+{
+  "name": "@zonglinlee/js-utils",
+  "version": "1.0.0",
+  "description": "common utils functions",
+  "browser": "./dist/bundle.min.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npm/cli.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint --ext .js src",
+    "bundle": "rollup -c"
+  },
+  "keywords": [
+    "javascript",
+    "utils"
+  ],
+  "author": "lee",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
+    "@rollup/plugin-commonjs": "^23.0.3",
+    "@rollup/plugin-terser": "^0.1.0",
+    "@rollup/plugin-typescript": "^10.0.1",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^29.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.2",
+    "jest": "^29.3.1",
+    "prettier": "2.8.0",
+    "rollup": "^3.5.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
