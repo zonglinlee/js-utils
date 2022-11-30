@@ -1,6 +1,6 @@
-import typescript from '@rollup/plugin-typescript';
-import commonjs from '@rollup/plugin-commonjs';
-import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript'
+import commonjs from '@rollup/plugin-commonjs'
+import terser from '@rollup/plugin-terser'
 
 /**
  * output.format
@@ -17,15 +17,16 @@ export default {
         {
             file: 'dist/bundle.min.js',
             format: 'umd',
-            name: 'version',
-            plugins: [terser()]
+            // 挂载在 window 对象上的命名空间
+            name: 'JsUtils', // Necessary for iife/umd bundles that exports values in which case it is the global variable name representing your bundle.
+            plugins: [terser()],
         },
         {
             file: 'dist/bundle.js',
             format: 'es',
-            name: 'version',
-            plugins: [terser()]
-        }
+            name: 'JsUtils',
+            plugins: [terser()],
+        },
     ],
-    plugins: [commonjs(), typescript()]
-};
+    plugins: [commonjs(), typescript()],
+}
