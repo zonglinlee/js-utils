@@ -1,6 +1,10 @@
 import typescript from '@rollup/plugin-typescript'
 import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
+import buildByPath from './build/buildByPath.mjs'
+
+const vueEntry = buildByPath('vue', ['vue', 'element-ui'])
+const othersEntry = buildByPath('others', ['axios'])
 
 /**
  * output.format
@@ -11,22 +15,26 @@ import terser from '@rollup/plugin-terser'
  * umd – Universal Module Definition, works as amd, cjs and iife all in one
  * system – Native format of the SystemJS loader (alias: systemjs)
  */
-export default {
-    input: 'src/index.ts',
-    output: [
-        {
-            file: 'dist/bundle.min.js',
-            format: 'umd',
-            // 挂载在 window 对象上的命名空间
-            name: 'JsUtils', // Necessary for iife/umd bundles that exports values in which case it is the global variable name representing your bundle.
-            plugins: [terser()],
-        },
-        {
-            file: 'dist/bundle.js',
-            format: 'es',
-            name: 'JsUtils',
-            plugins: [terser()],
-        },
-    ],
-    plugins: [commonjs(), typescript()],
-}
+const mainEntry = [
+    {
+        input: 'src/index.ts',
+        output: [
+            {
+                file: 'dist/umd/bundle.min.js',
+                format: 'umd',
+                // 挂载在 window 对象上的命名空间
+                name: 'JsUtils', // Necessary for iife/umd bundles that exports values in which case it is the global variable name representing your bundle.
+                plugins: [terser()],
+            },
+            {
+                file: 'dist/es/bundle.js',
+                format: 'es',
+                name: 'JsUtils',
+                plugins: [terser()],
+            },
+        ],
+        plugins: [commonjs(), typescript()],
+    },
+]
+
+export default [...mainEntry, ...vueEntry, ...othersEntry]
