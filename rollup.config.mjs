@@ -3,8 +3,9 @@ import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
 import buildByPath from './build/buildByPath.mjs'
 
+const commonEntry = buildByPath('common', )
 const vueEntry = buildByPath('vue', ['vue', 'element-ui'])
-const othersEntry = buildByPath('others', ['axios'])
+const othersEntry = buildByPath('others', ['axios','qs','element-ui'])
 
 /**
  * output.format
@@ -37,4 +38,4 @@ const mainEntry = [
     },
 ]
 
-export default [...mainEntry, ...vueEntry, ...othersEntry]
+export default [...mainEntry, ...commonEntry, ...vueEntry, ...othersEntry]
