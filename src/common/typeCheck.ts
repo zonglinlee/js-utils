@@ -22,6 +22,8 @@ export type TypeCheck = {
     isPromise: (x: PromiseLike<any> | Promise<any>) => boolean
     isPlainObj: (x: any) => boolean
     isLikeArray: (x: any) => boolean
+    isFun: (x: any) => boolean
+    isNum: (x: any) => boolean
 }
 
 const typeCheck: TypeCheck = {
@@ -64,10 +66,7 @@ const typeCheck: TypeCheck = {
         const funcToString = Function.prototype.toString
         const objectCtorString = funcToString.call(Object)
         // 这里通过字符串判断构造函数是否是Object，而不是直接使用instanceof，是为了避免上边提到的 多window环境Object不同的问题
-        if (funcToString.call(Ctor) === objectCtorString) {
-            return true
-        }
-        return false
+        return funcToString.call(Ctor) === objectCtorString;
     },
     /**
      * 类数组的定义是：
@@ -82,6 +81,16 @@ const typeCheck: TypeCheck = {
         return (
             typeof x.length === 'number' && x.length >= 0 && !Array.isArray(x)
         )
+    },
+    isFun(func: any): boolean {
+        return (
+            typeof func === 'function' ||
+            Object.prototype.toString.call(func) === '[object Function]'
+        )
+    },
+
+    isNum(num: any): boolean {
+        return typeof num === 'number' && !isNaN(num)
     },
 }
 
